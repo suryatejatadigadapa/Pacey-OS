@@ -1,0 +1,238 @@
+﻿Checkpoint 1
+
+	Date: 03/11/2016
+	Problem: IDT entries not initialised properly.Caused Triple Fault and General Protection Fault.
+	Solution: Assembly linker was not liking functions properly. Fixed the calls by extern-ing and making functions global where required.Also some idt entries DPL were incorrect.
+	Time to fix: 1 Day
+
+	Date: 03/12/2016
+	Problem: Received only one keyboard interrupt
+	Solution: Sent the eoi signal.
+	Time to fix: 2 Hours
+
+	Date: 03/13/2016
+	Problem: Paging didn’t work.
+	Solution: Changed structure of paging from a union of structs to an array and set the correct bits.
+	Time to fix: 6 Hours
+
+Checkpoint 2
+
+	Date: 03/22/2016
+	Problem: Read Data reading wrong values.
+	Solution: Fix typecasting to add 1 or 4 or 1024 or 4096 based on values being accessed.
+	Time to fix: 1 Day
+
+	Date: 03/23/2016
+	Problem: Read data function was over 400 lines because of masking a 32 byte pointer to get 8 bytes at a time. Using a 8 bytes pointer caused page faults or blank screens.
+	Solution: Expanded the function to first work with very inefficient code (over 400 lines), then condensed it to 40 odd lines by accessing data 8 bytes at a time properly.
+	Time to fix: 3 Days
+
+	Date: 03/25/2016
+	Problem: FS dir functions gave erroneous output a lot of times
+	Solution: Missed edge cases in read dentry by name and read dentry by index. Fixed them by doing param checks and invalid value checks.
+	Time to fix: 4 Hours
+
+	Date: 03/27/2016
+	Problem: Scrolling broke in random cases.
+	Solution: Added calls to scroll in multiple places.
+	Time to fix: 1 Hour
+
+	Date: 03/27/2016
+	Problem:Keyboard buffer overflow
+	Solution:Checked buffer overflow
+	Time to fix: 1 Hour
+
+Checkpoint 3
+
+	Date: 04/07/2016
+	Problem: Shell not running in spite of loading the correct eip
+	Solution: Restored stack properly after execute call, added 16 to esp. Correct values for context switching.
+	Time to fix: 10  Hours
+
+	Date:  04/08/2016
+	Problem: Did not return to shell after halt
+	Solution: Mapped to the correct physical memory (of parent) in halt.
+	Time to fix: 7 Hours
+
+	Date:  04/08/2016
+	Problem: Not loading the entire program.
+	Solution: Calculated file length correctly.
+	Time to fix: 4 Hours
+
+	Date: 04/11/2016
+	Problem: The exit command was not recognized.
+	Solution: terminal buffer had an extra ‘\n’, removed that.
+	Time to fix: 4 Hours
+
+	Date: 04/12/2016
+	Problem: Halt would page fault.
+	Solution: Flushing the TLB.
+	Time to fix: 4 Hours
+
+Checkpoint 4
+
+	Date: 04/16/2016
+	Problem: Fish wouldn’t work because read data was returning -1 for a wrong err check condition.
+	Solution: Fixed it by changing the err check condition.
+	Time to fix: 2 hours
+
+	Date: 04/16/2016
+	Problem: Failed err_syscall_num test in Sys_Err.
+	Solution:  Assembly linkage for system calls did not check for out of range values.Also the file functions.
+	Time to fix: 1 Hour
+
+	Date: 04/16/2016
+	Problem: Pingpong printed only the first two lines.
+	Solution: Initialized rtc in kernel.c
+	Time to fix: 1 Hour
+
+	Date: 04/18/2016
+	Problem: Only 3 shells worked.(Storing the pcb structure in memory that wasnt mapped)
+	Solution: Subtracted multiples of 24 kb from base kernel stack rather than adding it.
+	Time to fix: 2 Hours
+
+	Date: 04/19/2016
+	Problem: Cat RTC didn’t work.
+	Solution: Added a variable tick to flag that RTC read was writing a value. 
+	Time to fix: 2 Hours
+
+Checkpoint 5
+
+	Date: 04/28/2016
+	Problem: TSS loaded wrong esp/ebp values when context switching, causing page faults.
+	Solution: Corrected the process ids in the context switch
+	Time to fix: 3 Days
+
+	Date: 04/29/2016
+	Problem: Page fault when halting a process after running scheduling.
+	Solution:  Context switching wrong err condition
+	Time to fix: 1 Day
+
+	Date: 04/29/2016
+	Problem: Cursor showed up at the wrong location when switching terminals.
+	Solution: Saved cursor positions for every terminal
+	Time to fix: 2 Hours
+
+	Date: 04/30/2016
+	Problem:Files closed incorrectly
+	Solution: Each PCB did not have its own file descriptor array
+	Time to fix: 2 Hours
+
+	Date: 04/30/2016
+	Problem: Squash not implemented
+	Solution: Added halt to every exception
+	Time to fix: 1 Hour
+
+	Date: 04/30/2016
+	Problem: Fish not working in 3 terminals
+	Solution: Vidmap paging 
+	Time to fix: 2 Hours
+
+	Date: 04/30/2016
+	Problem:Keyboard buffer overflow
+	Solution: Reduced size by 1
+	Time to fix: 1 Hour
+
+
+Contribution of Group members:
+
+1.Kathy Qiu:
+
+Checkpoint 1:
+	Helped with IDT entries
+
+Checkpoint 2:
+	Wrote the file system driver (open/read/write/close for file and directory)
+	Helped with read_dentry_by_name and read_dentry_by_index
+
+Checkpoint 3:
+	Wrote sys_open, sys_close, sys_read, sys_close.
+	Fixed cat rtc
+
+Checkpoint 5:
+	Helped with PIT implementation
+	Added the interfaces
+
+Extra Credit:
+	Mouse Driver
+
+2.Surya Teja
+
+Checkpoint 1:
+	Helped with Idt entries. 
+	Fixed bugs in exceptions and handlers.
+	Testing and debugging
+
+Checkpoint 2:
+	File read data function.
+	Testing and Debugging.
+
+Checkpoint 3:
+	 Helped with System Execute.
+	 Helped with system Halt.
+	 Testing and Debugging.
+
+Checkpoint 4:
+	Helped with System getargs
+	Testing and Debugging.
+
+Checkpoint 5:
+	 Debugging Context Switch and Scheduling
+	 Debugging random page faults.
+	 Testing.
+
+3.Jesse Cornman:
+
+Checkpoint 1:
+	PIC driver
+	Helped with Paging and RTC
+	Debugging
+
+Checkpoint 2:
+	Terminal Driver
+	Debugging
+	Keyboard Handler
+
+Checkpoint 3:
+	Helped with System_execute 
+	Helped with System halt.
+	Debugging
+	Paging in halt and execute.
+
+Checkpoint 4:
+	Helped with sys_getargs
+	Wrote sys_vidmap
+
+Checkpoint 5:
+	Helped with Multiple Terminals
+	Wrote functions for scheduling
+	Debugging random page faults.
+
+4.Richa Meherwal:
+
+Checkpoint 1:
+	Helped with idt entries.
+	Debugging
+	Wrote the rtc and keyboard handler.
+	Helped with Paging.
+
+Checkpoint 2
+	File System functions , read dentry by name, read dentry by index
+	Helped with read data
+	RTC Driver
+	Debugging
+
+Checkpoint 3:
+	Helped with System_execute 
+	Helped with System halt.
+	Debugging
+	Paging in halt and execute.
+
+Checkpoint 4:
+	Helped with get args
+	Debugging
+
+Checkpoint 5:
+	Helped with Multiple Terminals.
+	Debugging Context Switch and Scheduling
+	Debugging random page faults.
